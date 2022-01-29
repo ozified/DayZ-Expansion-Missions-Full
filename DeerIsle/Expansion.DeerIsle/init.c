@@ -25,19 +25,7 @@ void SpawnObject( string type, vector position, vector orientation )
 }
 
 void main()
-{
-	bool loadTraderObjects = true;
-	bool loadTraderNPCs = true;
-
-	string MissionWorldName = "empty";
-	GetGame().GetWorldName(MissionWorldName);
-
-	if (MissionWorldName != "empty")
-	{
-		//! Spawn mission objects and traders
-		ExpansionObjectSpawnTools.FindMissionFiles("$CurrentDir:\\mpmissions\\Expansion." + MissionWorldName, loadTraderObjects, loadTraderNPCs);
-	}
-	
+{	
 	//INIT WEATHER BEFORE ECONOMY INIT------------------------
 	Weather weather = g_Game.GetWeather();
 
