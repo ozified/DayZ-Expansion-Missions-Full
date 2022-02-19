@@ -1,15 +1,3 @@
-/**
- * init.c
- *
- * DayZ Expansion Mod
- * www.dayzexpansion.com
- * © 2020 DayZ Expansion Mod Team
- *
- * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. 
- * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *
-*/
-
 void main()
 {
 	//INIT WEATHER BEFORE ECONOMY INIT------------------------
@@ -51,15 +39,7 @@ void main()
 
 class CustomMission: MissionServer
 {	
-	// ------------------------------------------------------------
-	// CustomMission constructor
-	// ------------------------------------------------------------
-	void CustomMission()
-	{
-		//! Set to true if you want to create a JSON dump list with all class names from all
-		// loaded mods in the server profile directory (ClassNames.JSON and ExpansionClassNames.JSON)
-		EXPANSION_CLASSNAME_DUMP = false;
-	}
+
 	
 	// ------------------------------------------------------------
 	// Override CreateCharacter

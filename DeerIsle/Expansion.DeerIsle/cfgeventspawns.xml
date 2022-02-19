@@ -290,7 +290,6 @@
   <event name="AnimalRoeDeer" />
   <event name="AnimalWolf" />
   <event name="AnimalWildBoar" />
-  	<!-- EXPANSION EVENT SPAWN POINTS -->
 	<!-- EXPANSION CARS -->
 	<event name="VehicleUAZ"> 
 		<pos x="3317.328" z="4437.48" a="335.3581" />

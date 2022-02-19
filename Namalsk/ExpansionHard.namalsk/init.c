@@ -1,15 +1,3 @@
-/**
- * init.c
- *
- * DayZ Expansion Mod
- * www.dayzexpansion.com
- * © 2020 DayZ Expansion Mod Team
- *
- * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. 
- * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *
-*/
-
 void main()
 {
 	/*
@@ -17,26 +5,6 @@ void main()
 	*/
 	CreateHive();
 	GetHive().InitOffline();
-
-	/*
-	  [Namalsk] Weather init
-	   Warning: DO NOT ALTER following values as they are interconnected with other Namalsk-specific systems!
-	   To ensure correct functionality, it is necessary to include weaher init AFTER the hive init.
-	*/
-	Weather weather = GetGame().GetWeather();
-	weather.MissionWeather( true );
-	weather.GetOvercast().SetLimits( 0.10, 0.30 );
-	weather.GetRain().SetLimits( 0.0, 0.0 );
-	weather.GetFog().SetLimits( 0.0, 0.0 );
-	weather.GetOvercast().SetForecastChangeLimits( 0.1, 0.3 );
-	weather.GetOvercast().SetForecastTimeLimits( 1600, 2100 );
-	weather.GetOvercast().Set( Math.RandomFloatInclusive( 0.1, 0.2 ), 0, 0 );	// ignored if storage is present
-	weather.GetRain().Set( 0, 0, 0 );											// ignored if storage is present
-	weather.GetFog().Set( 0, 0, 0 );											// ignored if storage is present
-	weather.SetWindMaximumSpeed( 30 );
-	weather.SetWindFunctionParams( 0.1, 1.0, 42 );
-	weather.SetStorm( 0, 1, 1 );
-	weather.SetRainThresholds( 0.0, 1.0, 0 );
 
 	/*
 	  [Namalsk] Mission time init
@@ -63,19 +31,6 @@ void main()
 
 class CustomMission: MissionServer
 {
-	// ------------------------------------------------------------
-	// CustomMission constructor
-	// ------------------------------------------------------------
-	void CustomMission()
-	{
-		//! Set to true if you want to create a JSON dump list with all class names from all
-		// loaded mods in the server profile directory (ClassNames.JSON and ExpansionClassNames.JSON)
-		EXPANSION_CLASSNAME_DUMP = false;
-	}
-
-	// ------------------------------------------------------------
-	// Override OnInit
-	// ------------------------------------------------------------
 	override void OnInit()
 	{
 		super.OnInit();
@@ -95,24 +50,7 @@ class CustomMission: MissionServer
 			m_EventManagerServer.RegisterEvent( HeavyFog, 0.3 );
 		}
 	}
-	
-	// ------------------------------------------------------------
-	// Override CreateCharacter
-	// ------------------------------------------------------------
-	override PlayerBase CreateCharacter(PlayerIdentity identity, vector pos, ParamsReadContext ctx, string characterName)
-	{
-		Entity playerEnt;
-		playerEnt = GetGame().CreatePlayer( identity, characterName, pos, 0, "NONE" );
-		Class.CastTo( m_player, playerEnt );
 
-		GetGame().SelectPlayer( identity, m_player );
-
-		return m_player;
-	}
-	
-	// ------------------------------------------------------------
-	// SetRandomHealth
-	// ------------------------------------------------------------
 	void SetRandomHealth(EntityAI itemEnt)
 	{
 		if (itemEnt)
@@ -122,13 +60,8 @@ class CustomMission: MissionServer
 		}
 	}
 
-	// ------------------------------------------------------------
-	// Override StartingEquipSetup
-	// ------------------------------------------------------------
 	override void StartingEquipSetup( PlayerBase player, bool clothesChosen )
 	{
-		//! NOTE: If you are using Expansion-Main, StartingEquipSetup will only be used if you have EnableCustomClothing set to 0 in SpawnSettings.json
-
 		EntityAI itemClothing;
 		EntityAI itemEnt;
 		ItemBase itemBs;
@@ -143,12 +76,11 @@ class CustomMission: MissionServer
 			itemEnt = itemClothing.GetInventory().CreateInInventory( "Rag" );
 			if ( Class.CastTo( itemBs, itemEnt ) )
 			{
+				SetRandomHealth( itemEnt );
 				itemBs.SetQuantity( 4 );
 				itemBs.SetCleanness( 1 );
 			}
 			player.SetQuickBarEntityShortcut( itemEnt, 0 );
-
-			SetRandomHealth( itemEnt );
 			
 			itemEnt = itemClothing.GetInventory().CreateInInventory( "RoadFlare" );
 			SetRandomHealth( itemEnt );
